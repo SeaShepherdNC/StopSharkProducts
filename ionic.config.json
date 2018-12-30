@@ -1,0 +1,7 @@
+{
+  "name": "animal-products",
+  "integrations": {
+    "cordova": {}
+  },
+  "type": "ionic-angular"
+}
