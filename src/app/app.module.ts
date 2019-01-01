@@ -13,12 +13,15 @@ import { HttpModule } from '@angular/http';
 
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
+import { ProductPage } from '../pages/product/product';
+
 import { DataServiceProvider } from '../providers/data-service/data-service';
 
 @NgModule({
   declarations: [
     MyApp,
-    HomePage
+    HomePage,
+    ProductPage,
   ],
   imports: [
     BrowserModule,
@@ -28,7 +31,9 @@ import { DataServiceProvider } from '../providers/data-service/data-service';
   bootstrap: [IonicApp],
   entryComponents: [
     MyApp,
-    HomePage
+    HomePage,
+    ProductPage,
+
   ],
   providers: [
     StatusBar,

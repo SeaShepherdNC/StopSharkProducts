@@ -3,6 +3,8 @@ import { NavController } from 'ionic-angular';
 import { BarcodeScanner } from '@ionic-native/barcode-scanner';
 import { Toast } from '@ionic-native/toast';
 import { DataServiceProvider } from '../../providers/data-service/data-service';
+import { ProductPage } from '../product/product';
+import { Product } from '../../models/product';
 
 @Component({
     selector: 'page-home',
@@ -23,6 +25,11 @@ export class HomePage {
                 this.products = response
                 console.log(this.products);
             });
+    }
+
+    navToProduct() {
+        let fakeProduct = new Product("test", false, ["beurk"], "https://static.openfoodfacts.org/images/products/324/541/381/2322/front_fr.11.400.jpg");
+        this.navCtrl.push(ProductPage, {product : fakeProduct})
     }
 
     scan() {

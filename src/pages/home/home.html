@@ -16,6 +16,15 @@
   <button ion-button color="dark" full round (click)="scan()">Start Scan</button>
 </h1>
 
+
+<p><!-- TODO add input json -->
+  <button ion-button icon-only (click)="navToProduct()">
+    <ion-icon  name="briefcase" ></ion-icon>
+  </button>
+  
+</p>
+  
+
 <ion-card *ngIf="productFound">
   <ion-card-header>
     <h2>Price: $ {{selectedProduct.price}}</h2>
@@ -28,5 +37,6 @@
     </ul>
   </ion-card-content>
 </ion-card>
+
 
 </ion-content>
