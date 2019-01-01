@@ -40,16 +40,20 @@
 
     <!-- Navigation Action buttons -->
   </ng-template>
-  <ion-fab right bottom name="navToScan">
-    <button ion-fab color="light" (click)="navToScan()">
-      <ion-icon name="barcode"></ion-icon>
-    </button>
-  </ion-fab>
 
-  <ion-fab left bottom>
-    <button ion-fab color="light" (click)="navToHistory()">
-      <ion-icon name="list"></ion-icon>
-    </button>
-  </ion-fab>
 
 </ion-content>
+
+<ion-footer>
+    <ion-fab right bottom name="navToScan">
+        <button ion-fab color="light" (click)="navToScan()">
+          <ion-icon name="barcode"></ion-icon>
+        </button>
+      </ion-fab>
+    
+      <ion-fab left bottom>
+        <button ion-fab color="light" (click)="navToHistory()">
+          <ion-icon name="list"></ion-icon>
+        </button>
+      </ion-fab>
+</ion-footer>

@@ -1,42 +1,23 @@
 <ion-header>
   <ion-navbar>
     <ion-title>
-      Ionic Blank
+      Animals Rescue
     </ion-title>
   </ion-navbar>
 </ion-header>
 
 <ion-content padding>
-  The world is your oyster.
-  <p>
-    If you get lost, the <a href="http://ionicframework.com/docs/v2">docs</a> will be your guide.
-  </p>
-
   <h1>
-  <button ion-button color="dark" full round (click)="scan()">Start Scan</button>
-</h1>
-
-
-<p><!-- TODO add input json -->
-  <button ion-button icon-only (click)="navToProduct()">
-    <ion-icon  name="briefcase" ></ion-icon>
-  </button>
-  
-</p>
-  
-
-<ion-card *ngIf="productFound">
-  <ion-card-header>
-    <h2>Price: $ {{selectedProduct.price}}</h2>
-  </ion-card-header>
-  <ion-card-content>
-    <ul>
-      <li>{{selectedProduct.plu}}</li>
-      <li>{{selectedProduct.name}}</li>
-      <li>{{selectedProduct.desc}}</li>
-    </ul>
-  </ion-card-content>
-</ion-card>
-
-
+    <button ion-button color="dark" full round (click)="scan()">Start Scan</button>
+  </h1>
 </ion-content>
+
+
+
+<ion-footer>
+  <ion-fab right bottom name="doScan">
+    <button ion-fab color="light" (click)="scan()">
+      <ion-icon name="barcode"></ion-icon>
+    </button>
+  </ion-fab>
+</ion-footer>

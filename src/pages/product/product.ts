@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { Product } from '../../models/product';
+import { HomePage } from '../home/home';
 
 /**
  * Generated class for the ProductPage page.
@@ -29,11 +30,13 @@ export class ProductPage {
 
   navToHistory(){
     console.log('todo : navToHistory');
+    this.navCtrl.push(HomePage);
     //this.navCtrl.push(HistoryPage)
   }
 
   navToScan(){
     console.log('todo : navToScan');
+    this.navCtrl.push(HomePage, {doScan : true});
     //this.navCtrl.push(ScanPage)
   }
 
