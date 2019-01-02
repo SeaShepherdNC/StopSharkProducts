@@ -17,6 +17,7 @@ import { ProductPage } from '../pages/product/product';
 
 import { DataServiceProvider } from '../providers/data-service/data-service';
 import { ProductPageModule } from '../pages/product/product.module';
+import { ViewedProductsProvider } from '../providers/viewed-products/viewed-products';
 
 @NgModule({
   declarations: [
@@ -41,7 +42,8 @@ import { ProductPageModule } from '../pages/product/product.module';
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     BarcodeScanner,
     Toast,
-    DataServiceProvider
+    DataServiceProvider,
+    ViewedProductsProvider
   ]
 })
 export class AppModule {}
