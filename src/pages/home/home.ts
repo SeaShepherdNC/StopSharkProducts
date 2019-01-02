@@ -14,35 +14,47 @@ import { Product } from '../../models/product';
 export class HomePage {
 
     constructor(public navCtrl: NavController,
-                public navParams: NavParams,
-                private barcodeScanner: BarcodeScanner,
-                private toast: Toast,
-                public dataService: DataServiceProvider) {
+        public navParams: NavParams,
+        private barcodeScanner: BarcodeScanner,
+        private toast: Toast,
+        public dataService: DataServiceProvider) {
         // dirty hook to allow scanning directly when going to this page
-        if (this.navParams.get('doScan')){
+        if (this.navParams.get('doScan')) {
             this.scan();
         }
     }
 
-    navToProduct() {
-        let fakeProduct = new Product("test", false, ["beurk"], "https://static.openfoodfacts.org/images/products/324/541/381/2322/front_fr.11.400.jpg");
-        this.navCtrl.push(ProductPage, {product : fakeProduct})
-    }
-
     scan() {
         // Mock
-        // this.dataService.getProduct("737628064502")
+        // this.dataService.getFoodProduct("737628064502")
         //     .subscribe((p) => {
-        //         this.navCtrl.push(ProductPage, {product : p});
+        //         if (p.exist) {
+        //             this.navCtrl.push(ProductPage, { product: p });
+        //             console.log("warning: Using test food mock")
+        //         }
+        //     });
+        // this.dataService.getBeautyProduct("737628064502")
+        //     .subscribe((p) => {
+        //         if (p.exist) {
+        //             this.navCtrl.push(ProductPage, { product: p });
+        //             console.log("warning: Using test beauty mock")
+        //         }
         //     });
 
+
         this.barcodeScanner.scan().then((barcodeData) => {
-            this.dataService.getProduct(barcodeData.text)
+            this.dataService.getFoodProduct(barcodeData.text)
                 .subscribe((p) => {
-                    // display product page
-                    this.navCtrl.push(ProductPage, {product : p});
-                    console.log(p)
-                    // todo add to history
+                    if (p.exist) {
+                        this.navCtrl.push(ProductPage, { product: p });
+                    }
+                });
+
+            this.dataService.getBeautyProduct(barcodeData.text)
+                .subscribe((p) => {
+                    if (p.exist) {
+                        this.navCtrl.push(ProductPage, { product: p });
+                    }
                 });
         }, (err) => {
             this.toast.show(err, '5000', 'center').subscribe(
@@ -54,4 +66,3 @@ export class HomePage {
     }
 
 }
-
