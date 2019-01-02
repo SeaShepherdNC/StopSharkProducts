@@ -13,22 +13,27 @@ import { HttpModule } from '@angular/http';
 
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
+import { ProductPage } from '../pages/product/product';
+
 import { DataServiceProvider } from '../providers/data-service/data-service';
+import { ProductPageModule } from '../pages/product/product.module';
 
 @NgModule({
   declarations: [
     MyApp,
-    HomePage
+    HomePage,
   ],
   imports: [
     BrowserModule,
     IonicModule.forRoot(MyApp),
-    HttpModule
+    HttpModule,
+    ProductPageModule,
   ],
   bootstrap: [IonicApp],
   entryComponents: [
     MyApp,
-    HomePage
+    HomePage,
+    ProductPage,
   ],
   providers: [
     StatusBar,
