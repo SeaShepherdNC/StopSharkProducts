@@ -28,29 +28,34 @@ export class DataServiceProvider {
     }
 
 
-    private buildProduct(isbn :string, payload: any[]) {
-        if (payload == undefined || payload['status'] === 0) {
-            console.log("Product doesn't exist in database")
-            return new Product(isbn, "Inconnu", false, false, [], "");
-        } else if (payload['product'] == undefined || payload['product']['product_name'] == undefined || payload['product']['product_name'].length === 0) {
-            console.log("Product malformed")
-            return new Product(isbn, "Inconnu", false, false, [], "");
-        }
+    private buildProduct(payload: any[]) {
+        let p = new Product()
 
+        if (payload == undefined || payload['status'] === 0 || payload['product'] == undefined || payload['product']['product_name'] == undefined || payload['product']['product_name'].length === 0) {
+            console.log("Product doesn't exist in database or malformed")
+            p.exist = false;
+            p.name = "Inconnu";
+            return p;
+        }
         let forbiddenIngredients = this.bannedIngredients
             .filter(function(ingredient) {
                 return payload['product']['ingredients_tags'].indexOf(ingredient) > -1;
             });
 
-        return new Product(
-            isbn,
-            payload['product']['product_name'],
-            true,
-            forbiddenIngredients.length === 0,
-            forbiddenIngredients,
-            payload['product']['image_url']);
+
+        p.name = payload['product']['product_name'];
+        p.isOk = forbiddenIngredients.length === 0;
+        p.exist = true;
+        p.listOfViolations = forbiddenIngredients;
+        p.imageUrl = payload['product']['image_url'];
+        p.additives = payload['product']['additives_tags'];
+        p.allergens = payload['product']['allergens_tags'];
+        p.traces = payload['product']['traces'];
+        p.certifications = payload['product']['labels'];
+        p.description = payload['product']['generic_name'];
+        p.quantity = payload['product']['quantity'];
+        p.nutritionGrade = payload['product']['nutrition_grades'];
+
+        return p;
     }
-
-
-
 }

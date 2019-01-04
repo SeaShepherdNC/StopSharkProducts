@@ -29,6 +29,7 @@ export class HomePage {
 
     scan() {
         // Mock
+
         this.dataService.getFoodProduct("737628064502")
             .subscribe((p) => {
                 if (p.exist) {

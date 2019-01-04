@@ -1,27 +1,25 @@
 page-product {
 
-    .product-image-overlay {
-        width: 100%;       
-        position:relative;
-        top:0px;
-        left:0px;
-        z-index:1;
-        opacity:0.5
-      }
     .product-image {
-        width: 100%;   
-        position:absolute;
-        top:0px;
-        left:0px;
-        z-index:0;
+        width: 100%;
+        position: relative;
         opacity:1;
     }
-    .product-image-container{
-        overflow:hidden;
-        width:100%;
-        height:40%;
-        position:relative;
+
+    .icons-ok {
+        width: 100%;
+        position: relative;
+        opacity:1;
     }
-      
-    
+
+    .thumbs-down thumbs-down {
+       width: 124px !important;
+       height: 124px !important;
+    }
+
+    ion-avatar img  {
+        width: 85% !important;
+        height : 85% !important;
+    }
+
 }
