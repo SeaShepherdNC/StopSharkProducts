@@ -6,6 +6,7 @@ import { Toast } from '@ionic-native/toast';
 import { DataServiceProvider } from '../../providers/data-service/data-service';
 import { ProductPage } from '../product/product';
 import { Product } from '../../models/product';
+import { ViewedProductsProvider } from '../../providers/viewed-products/viewed-products';
 
 @Component({
     selector: 'page-home',
@@ -17,7 +18,9 @@ export class HomePage {
         public navParams: NavParams,
         private barcodeScanner: BarcodeScanner,
         private toast: Toast,
-        public dataService: DataServiceProvider) {
+        public dataService: DataServiceProvider,
+        public viewedProducts: ViewedProductsProvider,
+        ) {
         // dirty hook to allow scanning directly when going to this page
         if (this.navParams.get('doScan')) {
             this.scan();
@@ -29,6 +32,7 @@ export class HomePage {
         // this.dataService.getFoodProduct("737628064502")
         //     .subscribe((p) => {
         //         if (p.exist) {
+        //             this.viewedProducts.addViewed(p);
         //             this.navCtrl.push(ProductPage, { product: p });
         //             console.log("warning: Using test food mock")
         //         }
@@ -36,6 +40,7 @@ export class HomePage {
         // this.dataService.getBeautyProduct("737628064502")
         //     .subscribe((p) => {
         //         if (p.exist) {
+        //             this.viewedProducts.addViewed(p);
         //             this.navCtrl.push(ProductPage, { product: p });
         //             console.log("warning: Using test beauty mock")
         //         }
@@ -46,6 +51,7 @@ export class HomePage {
             this.dataService.getFoodProduct(barcodeData.text)
                 .subscribe((p) => {
                     if (p.exist) {
+                        this.viewedProducts.addViewed(p);
                         this.navCtrl.push(ProductPage, { product: p });
                     }
                 });
@@ -53,6 +59,7 @@ export class HomePage {
             this.dataService.getBeautyProduct(barcodeData.text)
                 .subscribe((p) => {
                     if (p.exist) {
+                        this.viewedProducts.addViewed(p);
                         this.navCtrl.push(ProductPage, { product: p });
                     }
                 });

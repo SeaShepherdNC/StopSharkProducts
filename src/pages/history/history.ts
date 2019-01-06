@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { Product } from '../../models/product';
 import { ViewedProductsProvider } from '../../providers/viewed-products/viewed-products';
+import { ProductPage } from '../product/product';
 
 /**
  * Generated class for the HistoryPage page.
@@ -16,8 +17,7 @@ import { ViewedProductsProvider } from '../../providers/viewed-products/viewed-p
   templateUrl: 'history.html',
 })
 export class HistoryPage {
-
-  viewedProducts : [Product,viewColor[]
+  viewedProducts : Product[]
 
   constructor(public navCtrl: NavController, public navParams: NavParams, 
     public viewedProvider : ViewedProductsProvider) {
@@ -29,6 +29,11 @@ export class HistoryPage {
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad HistoryPage');
+  }
+
+  viewProduct(product : Product){
+    console.log("viewing product from history", product);
+    this.navCtrl.push(ProductPage, { product: product});
   }
 
 }

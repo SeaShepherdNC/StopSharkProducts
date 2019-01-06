@@ -15,24 +15,12 @@
 
 <ion-content padding>
   <ion-list>
-    <ion-item *ngFor="let product of viewedProducts" (click)="viewProduct(element)" ng-style="{ background: product.isOk == 'true' ? 'lightblue' : 'lightgreen' }">
+    <ion-item *ngFor="let product of viewedProducts" (click)="viewProduct(product)"
+    [ngStyle]="{ background: product.isOk ? '#33FF93': '#FF5733'}">
       <ion-avatar item-left>
         <ion-img [src]="product.imageUrl"></ion-img>
       </ion-avatar>
       <h2>{{product.name}}</h2>
-
-      <ul>
-        <li *ngFor="let violation of product.listOfViolations">
-          {{violation}}
-        </li>
-      </ul>
-    </ion-item>
-
-    <ion-item>
-      <div id="main" class="product-image-container">
-        <img src="./assets/imgs/nok.svg" alt="" class="product-image-overlay">
-        <img [src]="product?.imageUrl" alt="" class="product-image">
-      </div>
     </ion-item>
   </ion-list>
 </ion-content>
