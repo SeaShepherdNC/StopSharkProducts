@@ -10,6 +10,8 @@ import { BarcodeScanner } from '@ionic-native/barcode-scanner';
 import { Toast } from '@ionic-native/toast';
 //Add simple module to provide http methods
 import { HttpModule } from '@angular/http';
+//Add storage module to provide sqllite storage
+import { NativeStorage } from '@ionic-native/native-storage';
 
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
@@ -17,6 +19,8 @@ import { ProductPage } from '../pages/product/product';
 
 import { DataServiceProvider } from '../providers/data-service/data-service';
 import { ProductPageModule } from '../pages/product/product.module';
+import { ViewedProductsProvider } from '../providers/viewed-products/viewed-products';
+import { HistoryPageModule } from '../pages/history/history.module';
 
 @NgModule({
   declarations: [
@@ -28,6 +32,7 @@ import { ProductPageModule } from '../pages/product/product.module';
     IonicModule.forRoot(MyApp),
     HttpModule,
     ProductPageModule,
+    HistoryPageModule,
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -41,7 +46,9 @@ import { ProductPageModule } from '../pages/product/product.module';
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     BarcodeScanner,
     Toast,
-    DataServiceProvider
+    DataServiceProvider,
+    NativeStorage,
+    ViewedProductsProvider
   ]
 })
 export class AppModule {}
