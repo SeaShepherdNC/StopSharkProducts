@@ -38,7 +38,6 @@ import { HistoryPageModule } from '../pages/history/history.module';
   entryComponents: [
     MyApp,
     HomePage,
-    ProductPage,
   ],
   providers: [
     StatusBar,

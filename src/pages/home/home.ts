@@ -29,47 +29,47 @@ export class HomePage {
 
     scan() {
         // Mock
-        // this.dataService.getFoodProduct("737628064502")
-        //     .subscribe((p) => {
-        //         if (p.exist) {
-        //             this.viewedProducts.addViewed(p);
-        //             this.navCtrl.push(ProductPage, { product: p });
-        //             console.log("warning: Using test food mock")
-        //         }
-        //     });
-        // this.dataService.getBeautyProduct("737628064502")
-        //     .subscribe((p) => {
-        //         if (p.exist) {
-        //             this.viewedProducts.addViewed(p);
-        //             this.navCtrl.push(ProductPage, { product: p });
-        //             console.log("warning: Using test beauty mock")
-        //         }
-        //     });
-
-
-        this.barcodeScanner.scan().then((barcodeData) => {
-            this.dataService.getFoodProduct(barcodeData.text)
-                .subscribe((p) => {
-                    if (p.exist) {
-                        this.viewedProducts.addViewed(p);
-                        this.navCtrl.push(ProductPage, { product: p });
-                    }
-                });
-
-            this.dataService.getBeautyProduct(barcodeData.text)
-                .subscribe((p) => {
-                    if (p.exist) {
-                        this.viewedProducts.addViewed(p);
-                        this.navCtrl.push(ProductPage, { product: p });
-                    }
-                });
-        }, (err) => {
-            this.toast.show(err, '5000', 'center').subscribe(
-                toast => {
-                    console.log(toast);
+        this.dataService.getFoodProduct("737628064502")
+            .subscribe((p) => {
+                if (p.exist) {
+                    this.viewedProducts.addViewed(p);
+                    this.navCtrl.push(ProductPage, { product: p });
+                    console.log("warning: Using test food mock")
                 }
-            );
-        });
+            });
+        this.dataService.getBeautyProduct("737628064502")
+            .subscribe((p) => {
+                if (p.exist) {
+                    this.viewedProducts.addViewed(p);
+                    this.navCtrl.push(ProductPage, { product: p });
+                    console.log("warning: Using test beauty mock")
+                }
+            });
+
+
+        // this.barcodeScanner.scan().then((barcodeData) => {
+        //     this.dataService.getFoodProduct(barcodeData.text)
+        //         .subscribe((p) => {
+        //             if (p.exist) {
+        //                 this.viewedProducts.addViewed(p);
+        //                 this.navCtrl.push(ProductPage, { product: p });
+        //             }
+        //         });
+
+        //     this.dataService.getBeautyProduct(barcodeData.text)
+        //         .subscribe((p) => {
+        //             if (p.exist) {
+        //                 this.viewedProducts.addViewed(p);
+        //                 this.navCtrl.push(ProductPage, { product: p });
+        //             }
+        //         });
+        // }, (err) => {
+        //     this.toast.show(err, '5000', 'center').subscribe(
+        //         toast => {
+        //             console.log(toast);
+        //         }
+        //     );
+        // });
     }
 
 }
