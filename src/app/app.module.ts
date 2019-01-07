@@ -14,7 +14,6 @@ import { HttpModule } from '@angular/http';
 import { NativeStorage } from '@ionic-native/native-storage';
 
 import { MyApp } from './app.component';
-import { HomePage } from '../pages/home/home';
 import { ProductPage } from '../pages/product/product';
 
 import { DataServiceProvider } from '../providers/data-service/data-service';
@@ -23,31 +22,29 @@ import { ViewedProductsProvider } from '../providers/viewed-products/viewed-prod
 import { HistoryPageModule } from '../pages/history/history.module';
 
 @NgModule({
-  declarations: [
-    MyApp,
-    HomePage,
-  ],
-  imports: [
-    BrowserModule,
-    IonicModule.forRoot(MyApp),
-    HttpModule,
-    ProductPageModule,
-    HistoryPageModule,
-  ],
-  bootstrap: [IonicApp],
-  entryComponents: [
-    MyApp,
-    HomePage,
-  ],
-  providers: [
-    StatusBar,
-    SplashScreen,
-    {provide: ErrorHandler, useClass: IonicErrorHandler},
-    BarcodeScanner,
-    Toast,
-    DataServiceProvider,
-    NativeStorage,
-    ViewedProductsProvider
-  ]
+    declarations: [
+        MyApp,
+    ],
+    imports: [
+        BrowserModule,
+        IonicModule.forRoot(MyApp),
+        HttpModule,
+        ProductPageModule,
+        HistoryPageModule,
+    ],
+    bootstrap: [IonicApp],
+    entryComponents: [
+        MyApp,
+    ],
+    providers: [
+        StatusBar,
+        SplashScreen,
+        { provide: ErrorHandler, useClass: IonicErrorHandler },
+        BarcodeScanner,
+        Toast,
+        DataServiceProvider,
+        NativeStorage,
+        ViewedProductsProvider
+    ]
 })
-export class AppModule {}
+export class AppModule { }

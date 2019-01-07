@@ -19,12 +19,12 @@ export class DataServiceProvider {
 
     getFoodProduct(isbn: string): Observable<Product> {
         return this.http.get('https://world.openfoodfacts.org/api/v0/product/' + isbn + '.json')
-            .map((res: Response) => this.buildProduct(isbn, res.json()));
+            .map((res: Response) => this.buildProduct(res.json()));
     }
 
     getBeautyProduct(isbn: string): Observable<Product> {
         return this.http.get('https://world.openbeautyfacts.org/api/v0/product/' + isbn + '.json')
-            .map((res: Response) => this.buildProduct(isbn, res.json()));
+            .map((res: Response) => this.buildProduct(res.json()));
     }
 
 
