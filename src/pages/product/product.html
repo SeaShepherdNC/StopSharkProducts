@@ -50,7 +50,7 @@
         <ion-item>
             <p *ngIf="product?.certifications != ''">Certifications:</p>
             <ul>
-                <li *ngFor="let item of product?.certifications.split(',')">{{item}}</li>
+                <li *ngFor="let item of product?.certifications">{{item}}</li>
             </ul>
         </ion-item>
     </ion-card>
@@ -81,7 +81,7 @@
             <h2>Traces:</h2>
             <p *ngIf="product?.traces == ''"> Aucune</p>
             <ul>
-                <li *ngFor="let item of product?.traces.split(',')">{{item}}</li>
+                <li *ngFor="let item of product?.traces">{{item}}</li>
             </ul>
         </ion-item>
 

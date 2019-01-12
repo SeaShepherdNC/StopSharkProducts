@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { ViewedProductsProvider } from '../viewed-products/viewed-products';
 import { DataServiceProvider } from '../data-service/data-service';
-import { Toast } from '@ionic-native/toast';
 import { BarcodeScanner } from '@ionic-native/barcode-scanner';
 import { NavController } from 'ionic-angular';
 import { ProductPage } from '../../pages/product/product';
@@ -19,15 +18,14 @@ export class ProductScannerProvider {
 
   constructor(
     private barcodeScanner: BarcodeScanner,
-    private toast: Toast,
     private dataService: DataServiceProvider,
     private viewedProvider: ViewedProductsProvider,
-    private navCtrl: NavController,
   ) {
     console.log('Hello ProductScannerProvider Provider');
   }
 
-  scan() {
+  scan() : Observable<Product>{
+    console.log('start scan');
     // Mock
     // this.dataService.getFoodProduct("737628064502")
     //     .subscribe((p) => {
@@ -46,29 +44,28 @@ export class ProductScannerProvider {
     //         }
     //     });
 
-
-    // TODO : product scanner should not navigate to a page by its own
-    this.barcodeScanner.scan().then((barcodeData) => {
-      Observable.merge(
+    return Observable.from(this.barcodeScanner.scan()).flatMap((barcodeData) => {
+      console.log('Got a barcode, querying databases with ', barcodeData);
+      return Observable.merge(
         this.dataService.getFoodProduct(barcodeData.text),
         this.dataService.getBeautyProduct(barcodeData.text),
         2)
         .timeout(4000)
         .filter(p => p.exist)
-        .first()
-        .subscribe((p) => {
-          console.log('got produt', p)
-          this.viewedProvider.addViewed(p);
-          this.navCtrl.push(ProductPage, { product: p });
-        }, (err) => {
-          console.error(err);
-          this.toast.show(err, '5000', 'center').subscribe(
-            toast => {
-              console.log(toast);
-            }
-          );
-        })
+        .first();
     });
   }
+
+  // .subscribe((p) => {
+  //   console.log('got produt', p)
+  //   this.viewedProvider.addViewed(p);
+  // }, (err) => {
+  //   console.error(err);
+  //   this.toast.show(err, '5000', 'center').subscribe(
+  //     toast => {
+  //       console.log(toast);
+  //     }
+  //   );
+  // })
 
 }

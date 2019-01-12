@@ -7,7 +7,7 @@ export class Product {
     additives: string[];// additives_tags
     allergens: string[]; // allergens_tags
     traces: string[]; //traces
-    certifications: string; // labels
+    certifications: string[]; // labels
     description: string; // generic_name
     quantity: string; //quantity
     nutritionGrade: string //nutrition_grades

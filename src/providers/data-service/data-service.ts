@@ -20,11 +20,13 @@ export class DataServiceProvider {
 
 
     getFoodProduct(isbn: string): Observable<Product> {
+        console.debug('querying food database with ', isbn);
         return this.http.get('https://world.openfoodfacts.org/api/v0/product/' + isbn + '.json')
             .map((res: Response) => this.buildProduct(res.json()));
     }
 
     getBeautyProduct(isbn: string): Observable<Product> {
+        console.debug('querying beauty database with ', isbn);
         return this.http.get('https://world.openbeautyfacts.org/api/v0/product/' + isbn + '.json')
             .map((res: Response) => this.buildProduct(res.json()));
     }
@@ -49,15 +51,22 @@ export class DataServiceProvider {
         p.isOk = forbiddenIngredients.length === 0;
         p.exist = true;
         p.listOfViolations = forbiddenIngredients;
+
         p.imageUrl = payload['product']['image_url'];
         p.additives = payload['product']['additives_tags'];
         p.allergens = payload['product']['allergens_tags'];
-        p.traces = payload['product']['traces'];
-        p.certifications = payload['product']['labels'];
+        p.traces = [];
+        if (payload['product']['traces'] != null) {
+            p.traces = payload['product']['traces'].split(',');
+        }
+        p.certifications = [];
+        if (payload['product']['labels'] != null) {
+            p.certifications = payload['product']['labels'].split(',');
+        }
         p.description = payload['product']['generic_name'];
         p.quantity = payload['product']['quantity'];
         p.nutritionGrade = payload['product']['nutrition_grades'];
-
+    
         return p;
     }
 }
