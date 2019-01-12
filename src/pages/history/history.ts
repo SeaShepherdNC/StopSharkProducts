@@ -3,9 +3,7 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { Product } from '../../models/product';
 import { ViewedProductsProvider } from '../../providers/viewed-products/viewed-products';
 import { ProductPage } from '../product/product';
-import { DataServiceProvider } from '../../providers/data-service/data-service';
-import { BarcodeScanner } from '@ionic-native/barcode-scanner';
-import { Toast } from '@ionic-native/toast';
+import { ProductScannerProvider } from '../../providers/product-scanner/product-scanner';
 
 /**
  * Generated class for the HistoryPage page.
@@ -24,73 +22,33 @@ export class HistoryPage {
 
     constructor(public navCtrl: NavController,
         public navParams: NavParams,
-        private barcodeScanner: BarcodeScanner,
-        private toast: Toast,
-        public dataService: DataServiceProvider,
-        public viewedProvider: ViewedProductsProvider) {
-
-        // dirty hook to allow scanning directly when going to this page
-        if (this.navParams.get('doScan')) {
-            this.scan();
-        }
+        public viewedProvider: ViewedProductsProvider,
+        public productScanner: ProductScannerProvider,
+    ) {
+        console.log('constructing HistoryPage')
         // asynchronously update the list of viewedProducts
-        this.viewedProvider.getAllViewed().then(viewed => {
-            this.viewedProducts = viewed;
-        });
+        // this.viewedProvider.updateEvents.subscribe(
+        //     p => {
+        //         console.log('event from viewedProvider', p);
+        //         this.viewedProvider.getAllViewed()
+        //             .then(viewed => {
+        //                 this.viewedProducts = viewed;
+        //             })
+        //     });
+        console.log('constructed HistoryPage')
     }
 
     ionViewDidLoad() {
         console.log('ionViewDidLoad HistoryPage');
     }
 
+    // scan() {
+    //     console.log("HistoryPage requests a product scan")
+    //     this.productScanner.scan();
+    // }
+
     viewProduct(product: Product) {
         console.log("viewing product from history", product);
         this.navCtrl.push(ProductPage, { product: product });
     }
-
-    scan() {
-        // Mock
-        // this.dataService.getFoodProduct("737628064502")
-        //     .subscribe((p) => {
-        //         if (p.exist) {
-        //             this.viewedProvider.addViewed(p);
-        //             this.navCtrl.push(ProductPage, { product: p });
-        //             console.log("warning: Using test food mock")
-        //         }
-        //     });
-        // this.dataService.getBeautyProduct("737628064502")
-        //     .subscribe((p) => {
-        //         if (p.exist) {
-        //             this.viewedProvider.addViewed(p);
-        //             this.navCtrl.push(ProductPage, { product: p });
-        //             console.log("warning: Using test beauty mock")
-        //         }
-        //     });
-
-
-        this.barcodeScanner.scan().then((barcodeData) => {
-            this.dataService.getFoodProduct(barcodeData.text)
-                .subscribe((p) => {
-                    if (p.exist) {
-                        this.viewedProvider.addViewed(p);
-                        this.navCtrl.push(ProductPage, { product: p });
-                    }
-                });
-
-            this.dataService.getBeautyProduct(barcodeData.text)
-                .subscribe((p) => {
-                    if (p.exist) {
-                        this.viewedProvider.addViewed(p);
-                        this.navCtrl.push(ProductPage, { product: p });
-                    }
-                });
-        }, (err) => {
-            this.toast.show(err, '5000', 'center').subscribe(
-                toast => {
-                    console.log(toast);
-                }
-            );
-        });
-    }
-
 }

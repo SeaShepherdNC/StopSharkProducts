@@ -14,7 +14,9 @@ export class DataServiceProvider {
         'fr:requin',
         'en:shark'];
 
-    constructor(public http: Http) { }
+    constructor(public http: Http) { 
+        console.log('constructed DataServiceProvider')
+    }
 
 
     getFoodProduct(isbn: string): Observable<Product> {
