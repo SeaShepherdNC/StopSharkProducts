@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { NativeStorage } from '@ionic-native/native-storage';
 import { Product } from '../../models/product';
 import { Observable, Subject } from 'rxjs';
+import { Platform } from 'ionic-angular';
 
 const STORAGE_KEY = 'viewedProducts';
 
@@ -9,9 +10,13 @@ const STORAGE_KEY = 'viewedProducts';
 export class ViewedProductsProvider {
 
   public updateEvents = new Subject<Product>();
+  private readyStorage: Observable<NativeStorage>;
 
-  constructor(private storage: NativeStorage) {
+  constructor(private storage: NativeStorage,
+    private platform: Platform) {
+    this.readyStorage = Observable.fromPromise(this.platform.ready()).map(r => this.storage);
     console.log('ViewedProductsProvider Provider constructed');
+
   }
 
 
@@ -23,14 +28,15 @@ export class ViewedProductsProvider {
 
   addViewed(product: Product) {
     console.log("adding a product to viewed", product);
-    return this.getAllViewed().subscribe(result => {
+    return this.getAllViewed().flatMap(result => {
+      console.log("updating all viewed" + result);
       if (result) {
         result.push(product);
         return this.setAndNotify(result);
       } else {
         return this.setAndNotify([product]);
       }
-    });
+    }).subscribe();
   }
 
   addViewedUnique(product: Product) {
@@ -65,23 +71,27 @@ export class ViewedProductsProvider {
 
   getAllViewed(): Observable<Product[]> {
     console.log("retrieveing all stored product");
-    return Observable.fromPromise(this.storage.getItem(STORAGE_KEY).
-    catch(err => console.error(err)));
+    return this.readyStorage.flatMap(r => {
+      return Observable.fromPromise(this.storage.getItem(STORAGE_KEY))
+    })
   }
 
 
   setAndNotify(value: Product[]): Observable<any> {
-    console.debug('setting value to storage', value);
-    return Observable.fromPromise(
-      this.storage.
-        setItem(STORAGE_KEY, value).
-        then(
-          e => {
-            console.debug('setting value to storage success');
-            // publish an update event
-            this.updateEvents.next(e)
-            console.debug('update event generated');
-          }).
-        catch(err => console.error(err)));
+    console.log('setting value to storage', value);
+    return this.readyStorage.flatMap(r => {
+      console.log('storage is ready', r);
+      return Observable.fromPromise(
+        this.storage.setItem(STORAGE_KEY, value).
+          then(
+            e => {
+              console.debug('setting value to storage success');
+              // publish an update event
+              this.updateEvents.next(e)
+              console.debug('update event generated');
+            }).
+          catch(err => console.error(err)));
+    });
   }
 }
+

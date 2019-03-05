@@ -34,11 +34,16 @@ export class HistoryPage {
                 console.log('event from viewedProvider', evt);
                 return this.viewedProvider.getAllViewed().map(
                     viewed => this.viewedProducts = viewed)
-                }).subscribe();
+            }
+        ).subscribe();
+
+
         console.log('constructed HistoryPage')
     }
 
     ionViewDidLoad() {
+        this.viewedProvider.getAllViewed().map(
+            viewed => this.viewedProducts = viewed).subscribe();
         console.log('ionViewDidLoad HistoryPage');
     }
 
