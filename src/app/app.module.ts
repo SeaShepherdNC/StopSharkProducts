@@ -14,12 +14,13 @@ import { HttpModule } from '@angular/http';
 import { NativeStorage } from '@ionic-native/native-storage';
 
 import { MyApp } from './app.component';
-import { ProductPage } from '../pages/product/product';
+//import { ProductPage } from '../pages/product/product';
 
 import { DataServiceProvider } from '../providers/data-service/data-service';
 import { ProductPageModule } from '../pages/product/product.module';
 import { ViewedProductsProvider } from '../providers/viewed-products/viewed-products';
 import { HistoryPageModule } from '../pages/history/history.module';
+import { ProductScannerProvider } from '../providers/product-scanner/product-scanner';
 
 @NgModule({
     declarations: [
@@ -44,7 +45,8 @@ import { HistoryPageModule } from '../pages/history/history.module';
         Toast,
         DataServiceProvider,
         NativeStorage,
-        ViewedProductsProvider
+        ViewedProductsProvider,
+        ProductScannerProvider,
     ]
 })
 export class AppModule { }

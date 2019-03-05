@@ -1,63 +1,87 @@
 import { Injectable } from '@angular/core';
 import { NativeStorage } from '@ionic-native/native-storage';
 import { Product } from '../../models/product';
+import { Observable, Subject } from 'rxjs';
 
 const STORAGE_KEY = 'viewedProducts';
 
 @Injectable()
 export class ViewedProductsProvider {
 
+  public updateEvents = new Subject<Product>();
+
   constructor(private storage: NativeStorage) {
-    console.log('ViewedProductsProvider Provider conructed');
+    console.log('ViewedProductsProvider Provider constructed');
   }
 
-  isViewed(product: Product): Promise<boolean> {
-    return this.getAllViewed().then(result => {
+
+  isViewed(product: Product): Observable<boolean> {
+    return this.getAllViewed().map(result => {
       return result && result.indexOf(product) !== -1;
     });
   }
 
-  addViewed(product: Product): Promise<any> {
+  addViewed(product: Product) {
     console.log("adding a product to viewed", product);
-    return this.getAllViewed().then(result => {
+    return this.getAllViewed().subscribe(result => {
       if (result) {
         result.push(product);
-        return this.storage.setItem(STORAGE_KEY, result);
+        return this.setAndNotify(result);
       } else {
-        return this.storage.setItem(STORAGE_KEY, [product]);
+        return this.setAndNotify([product]);
       }
     });
   }
 
-  addViewedUnique(product: Product): Promise<any> {
+  addViewedUnique(product: Product) {
     console.log("adding a product to viewed without redundancy", product);
-    return this.getAllViewed().then(result => {
+    return this.getAllViewed().subscribe(result => {
       if (result) {
         // produc already in the list
         if (result.indexOf(product) != -1) {
-          return Promise.resolve(product);
+          return Observable.of(product);
         }
         result.push(product);
-        return this.storage.setItem(STORAGE_KEY, result);
+        return this.setAndNotify(result);
       } else {
-        return this.storage.setItem(STORAGE_KEY, [product]);
+        return this.setAndNotify([product]);
       }
     });
   }
 
-  removeViewed(product: Product): Promise<any> {
+
+
+  removeViewed(product: Product) {
     console.log("removing a product from viewed", product);
-    return this.getAllViewed().then(result => {
+    return this.getAllViewed().subscribe(result => {
+      // send a notification
       if (result) {
         var index = result.indexOf(product);
         result.splice(index, 1);
-        return this.storage.setItem(STORAGE_KEY, result);
+        return this.setAndNotify(result)
       }
     });
   }
 
-  getAllViewed(): Promise<Product[]> {
-    return this.storage.getItem(STORAGE_KEY)
-    .catch(error => console.log("could not fetch value from storage",STORAGE_KEY, this.storage, ));
+  getAllViewed(): Observable<Product[]> {
+    console.log("retrieveing all stored product");
+    return Observable.fromPromise(this.storage.getItem(STORAGE_KEY).
+    catch(err => console.error(err)));
+  }
+
+
+  setAndNotify(value: Product[]): Observable<any> {
+    console.debug('setting value to storage', value);
+    return Observable.fromPromise(
+      this.storage.
+        setItem(STORAGE_KEY, value).
+        then(
+          e => {
+            console.debug('setting value to storage success');
+            // publish an update event
+            this.updateEvents.next(e)
+            console.debug('update event generated');
+          }).
+        catch(err => console.error(err)));
   }
 }
