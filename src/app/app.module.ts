@@ -14,7 +14,7 @@ import { HttpModule } from '@angular/http';
 import { NativeStorage } from '@ionic-native/native-storage';
 
 import { MyApp } from './app.component';
-import { ProductPage } from '../pages/product/product';
+//import { ProductPage } from '../pages/product/product';
 
 import { DataServiceProvider } from '../providers/data-service/data-service';
 import { ProductPageModule } from '../pages/product/product.module';
