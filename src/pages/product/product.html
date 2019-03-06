@@ -4,97 +4,166 @@
     </ion-navbar>
 </ion-header>
 
-<ion-content padding>
-    <ion-card >
+<ion-content >
+    <ion-grid>
+        <ion-card >
+            <ion-row >
+                <ion-col col-3>
+                    <ion-avatar center>
+                        <img class="product-image" [src]="product.imageUrl"/>
+                    </ion-avatar>
+                </ion-col>
+                <ion-col col-6>
+                    <h2><b>{{product.name}}</b></h2><br>
+                    <p><i>{{product?.description}}</i></p>
+                </ion-col>
+                <ion-col col-3>
+                    <img *ngIf="product.listOfViolations.length + product.additives.length === 0" class="product-icon-100" src="./assets/imgs/like-48.png">
+                    <img *ngIf="product.listOfViolations.length + product.additives.length !== 0" class="product-icon-100" src="./assets/imgs/unlike-48.png">
+                </ion-col>
+            </ion-row>
+        </ion-card>
 
-        <ion-row padding>
-            <ion-col>
-                <ion-avatar item-start>
-                    <img class="product-image" [src]="product.imageUrl"/>
-                </ion-avatar>
-            </ion-col>
-            <ion-col>
-                <h1><b>{{product.name}}</b></h1><br>
-                <p><i>{{product?.description}}</i></p>
-            </ion-col>
-        </ion-row>
-    </ion-card>
+        <ion-card >
+            <ion-row>
+                <ion-col col-3>
+                    <img class="product-icon-40" src="./assets/imgs/whale-40.png">
+                </ion-col>
+                <ion-col col-6>
+                    <ion-content text-center>
+                        <br><h2>Espèces menacées </h2><hr>
+                    </ion-content>
+                </ion-col>
+                <ion-col col-1>
+                    <ion-content text-right>
+                        <br><h2><b>{{product?.listOfViolations.length}}</b></h2>
+                    </ion-content>
+                </ion-col>
+                <ion-col col-2>
+                    <img *ngIf="product.listOfViolations.length === 0" class="product-icon-40" src="./assets/imgs/like-48.png">
+                    <img *ngIf="product.listOfViolations.length !== 0" class="product-icon-40" src="./assets/imgs/unlike-48.png">
+                </ion-col>
+                <ion-col col-12>
+                    <ion-item text-center>
+                        <ng-container *ngFor="let item of product?.listOfViolations">
+                            <ion-icon color="secondary" name="arrow-dropright"></ion-icon> {{item}}
+                        </ng-container>
+                    </ion-item>
+                </ion-col>
+            </ion-row>
+        </ion-card>
 
-    <ion-card >
-        <ion-row padding>
-            <ion-col *ngIf="product.listOfViolations.length === 0" >
-                <ion-icon color="secondary" name="thumbs-up"></ion-icon>
-                <b>{{product?.listOfViolations.length}}</b> espèces menacées
-            </ion-col>
-            <ion-col *ngIf="product.listOfViolations.length !== 0" >
-                <ion-icon color="danger" name="thumbs-down"></ion-icon>
-                <b>{{product?.listOfViolations.length}}</b> espèces menacées
-            </ion-col>
-            <ion-col *ngIf="product.additives.length === 0" >
-                <ion-icon color="secondary" name="thumbs-up"></ion-icon>
-                <b>{{product?.additives.length}}</b> additifs
-            </ion-col>
-            <ion-col *ngIf="product.additives.length !== 0" >
+        <ion-card >
+            <ion-row>
+                <ion-col col-3>
+                    <img class="product-icon-40" src="./assets/imgs/skull-40.png">
+                </ion-col>
+                <ion-col col-6>
+                    <ion-content text-center>
+                        <br><h2>Additifs </h2><hr>
+                    </ion-content>
+                </ion-col>
+                <ion-col col-1>
+                    <ion-content text-right>
+                        <br><h2><b>{{product?.additives.length}}</b></h2>
+                    </ion-content>
+                </ion-col>
+                <ion-col col-2>
+                    <img *ngIf="product.additives.length === 0" class="product-icon-40" src="./assets/imgs/like-48.png">
+                    <img *ngIf="product.additives.length !== 0" class="product-icon-40" src="./assets/imgs/unlike-48.png">
+                </ion-col>
+                <ion-col col-12>
+                    <ion-item text-center>
+                        <ng-container *ngFor="let item of product?.additives">
+                              <ion-icon color="secondary" name="arrow-dropright"></ion-icon> {{item}}
+                        </ng-container>
+                    </ion-item>
+                </ion-col>
+            </ion-row>
+        </ion-card>
 
-                <ion-icon color="danger" name="thumbs-down"></ion-icon>
-                <b>{{product?.additives.length}}</b> additifs
-
-            </ion-col>
-        </ion-row>
-    </ion-card>
-
-    <ion-card >
-        <ion-item>
-            <img *ngIf=" product?.nutritionGrade != ''" src="./assets/imgs/{{product?.nutritionGrade}}.png">
-        </ion-item>
-        <ion-item>
-            <p *ngIf="product?.certifications != ''">Certifications:</p>
-            <ul>
-                <li *ngFor="let item of product?.certifications">{{item}}</li>
-            </ul>
-        </ion-item>
-    </ion-card>
-
-    <ion-card >
-        <ion-item>
-            <h2>Espèces menacées:</h2>
-            <p *ngIf="product.listOfViolations.length === 0"> Aucune</p>
-            <ul>
-                <li *ngFor="let item of product?.listOfViolations">{{item}}</li>
-            </ul>
-        </ion-item>
-        <ion-item>
-            <h2>Additifs:</h2>
-            <p *ngIf="product.additives.length === 0"> Aucun</p>
-            <ul>
-                <li *ngFor="let item of product?.additives">{{item}}</li>
-            </ul>
-        </ion-item>
-        <ion-item>
-            <h2>Allergènes:</h2>
-            <p *ngIf="product.allergens.length === 0"> Aucun</p>
-            <ul>
-                <li *ngFor="let item of product?.allergens">{{item}}</li>
-            </ul>
-        </ion-item>
-        <ion-item>
-            <h2>Traces:</h2>
-            <p *ngIf="product?.traces == ''"> Aucune</p>
-            <ul>
-                <li *ngFor="let item of product?.traces">{{item}}</li>
-            </ul>
-        </ion-item>
-
-    </ion-card>
-
-    <ion-card >
-        <ion-item>
-            <p>Quantité: {{product?.quantity}}</p>
-        </ion-item>
-        <ion-item>
-            <p>Tableau nutritionnel: TODO</p>
-        </ion-item>
-    </ion-card>
+        <ion-card  >
+            <ion-row>
+                <ion-col col-3>
+                    <img class="product-icon-40" src="./assets/imgs/food-40.png">
+                </ion-col>
+                <ion-col col-6>
+                    <ion-content text-center>
+                        <br><h2>Qualité nutrionnelle </h2><hr>
+                    </ion-content>
+                </ion-col>
+                <ion-col col-3>
+                    <img class="product-image" *ngIf=" product?.nutritionGrade != ''" src="./assets/imgs/{{product?.nutritionGrade}}.png">
+                </ion-col>
+                <ion-col col-3>
+                    <img class="product-icon-40" src="./assets/imgs/microorga-40.png">
+                </ion-col>
+                <ion-col col-6>
+                    <ion-content text-center>
+                        <br><h2>Produits allergènes </h2><hr>
+                    </ion-content>
+                </ion-col>
+                <ion-col col-3>
+                </ion-col>
+                <ion-col col-12>
+                    <ion-item text-center>
+                        <ng-container *ngFor="let item of product?.allergens">
+                            <ion-icon color="secondary" name="arrow-dropright"></ion-icon> {{item}}
+                        </ng-container>
+                    </ion-item>
+                </ion-col>
+                 <ion-col col-3>
+                    <img class="product-icon-40" src="./assets/imgs/trace-48.png">
+                </ion-col>
+                <ion-col col-6>
+                    <ion-content text-center>
+                        <br><h2>Traces </h2><hr>
+                    </ion-content>
+                </ion-col>
+                <ion-col col-3>
+                </ion-col>
+                <ion-col col-12>
+                    <ion-item text-center>
+                        <ng-container *ngFor="let item of product?.traces.split(',')">
+                            <ion-icon color="secondary" name="arrow-dropright"></ion-icon> {{item}}
+                        </ng-container>
+                    </ion-item>
+                </ion-col>
+                 <ion-col col-3>
+                    <img class="product-icon-40" src="./assets/imgs/scale-40.png">
+                </ion-col>
+                <ion-col col-6>
+                    <ion-content text-center>
+                        <br><h2>Quantité </h2><hr>
+                    </ion-content>
+                </ion-col>
+                 <ion-col col-3>
+                    <ion-content text-center>
+                        <br><h2>{{product?.quantity}}</h2>
+                    </ion-content>
+                </ion-col>
+            </ion-row>
+        </ion-card>
+  <ion-card >
+            <ion-row>
+                <ion-col col-3>
+                    <img class="product-icon-40" src="./assets/imgs/list-40.png">
+                </ion-col>
+                <ion-col col-6>
+                    <ion-content text-center>
+                        <br><h2>Tableau nutrionnelle </h2>
+                    </ion-content>
+                </ion-col>
+                <ion-col col-3>
+                </ion-col>
+                <ion-col col-12>
+                    <ion-item text-center>
+                            <hr><p>TODO</p>
+                    </ion-item>
+                </ion-col>
+            </ion-row>
+        </ion-card>
+    </ion-grid>
 </ion-content>
 
 <ion-footer>
